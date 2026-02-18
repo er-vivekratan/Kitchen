@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Track Order</h2>
+<input id="oid" placeholder="Order ID">
+<button onclick="track()">Track</button>
+<p id="result"></p>
+
+<script>
+function track(){
+fetch("http://localhost:5000/track/"+oid.value)
+.then(r=>r.json())
+.then(d=>result.innerText="Status: "+d.status)
+.catch(()=>result.innerText="Order not found");
+}
+</script>
+</body>
+</html>

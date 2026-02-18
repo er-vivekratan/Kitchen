@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Admin Panel</h2>
+
+<input id="u" placeholder="Username">
+<input id="p" placeholder="Password" type="password">
+<button onclick="login()">Login</button>
+
+<ul id="orders"></ul>
+
+<script>
+function login(){
+fetch("http://localhost:5000/admin-login",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({username:u.value,password:p.value})
+})
+.then(()=>loadOrders())
+.catch(()=>alert("Invalid"));
+}
+
+function loadOrders(){
+fetch("http://localhost:5000/admin-orders")
+.then(r=>r.json())
+.then(data=>{
+orders.innerHTML="";
+data.forEach(o=>{
+orders.innerHTML+=`<li>${o.product} - ₹${o.amount} - ${o.status}</li>`;
+});
+});
+}
+</script>
+</body>
+</html>

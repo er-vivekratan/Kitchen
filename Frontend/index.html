@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mumma’s Kitchen</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<h1>Mumma’s Kitchen</h1>
+<button onclick="pay()">Pay ₹299 (Atta)</button>
+
+<script>
+function pay(){
+fetch("http://localhost:5000/create-order",{
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body:JSON.stringify({amount:299})
+})
+.then(res=>res.json())
+.then(order=>{
+var options={
+key:"RAZORPAY_KEY_ID",
+amount:order.amount,
+currency:"INR",
+order_id:order.id,
+handler:function(){
+saveOrder();
+}
+};
+new Razorpay(options).open();
+});
+}
+
+function saveOrder(){
+fetch("http://localhost:5000/save-order",{
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body:JSON.stringify({
+name:"Customer",
+product:"Wheat Atta",
+amount:299
+})
+})
+.then(res=>res.json())
+.then(d=>alert("Order ID: "+d.orderId));
+}
+</script>
+
+</body>
+</html>

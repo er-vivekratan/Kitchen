@@ -1,0 +1,8 @@
+{
+"name":"Mumma’s Kitchen",
+"short_name":"Mumma",
+"start_url":"index.html",
+"display":"standalone",
+"background_color":"#8b5e3c",
+"theme_color":"#8b5e3c"
+}
